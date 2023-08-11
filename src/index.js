@@ -1,11 +1,10 @@
-import axios from 'axios';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import { fetchImages } from './api';
 
 const lightbox = new SimpleLightbox('.gallery a');
 
-const API_KEY = '38764161-33ef2e0b129eb594e9cec79f2';
 const form = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
@@ -13,26 +12,6 @@ let currentPage = 1;
 let currentQuery = '';
 
 loadMoreBtn.style.display = 'none';
-
-async function fetchImages(query, page) {
-  try {
-    const response = await axios.get('https://pixabay.com/api/', {
-      params: {
-        key: API_KEY,
-        q: query,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        page: page,
-        per_page: 40,
-      },
-    });
-
-    return response.data.hits;
-  } catch (error) {
-    throw error;
-  }
-}
 
 function createImageCard(image) {
   const card = document.createElement('div');
